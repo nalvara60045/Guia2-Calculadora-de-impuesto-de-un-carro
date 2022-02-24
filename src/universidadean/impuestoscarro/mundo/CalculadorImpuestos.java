@@ -12,8 +12,8 @@
 
 package universidadean.impuestoscarro.mundo;
 
+import javax.swing.*;
 import java.io.*;
-import java.util.*;
 
 /**
  * Calculador de impuestos.
@@ -225,11 +225,17 @@ public class CalculadorImpuestos {
      *
      * @return El primer vehículo de la marca. Si no encuentra ninguno retorna null.
      */
-    public Vehiculo buscarVehiculoPorMarca() {
+    public Vehiculo buscarVehiculoPorMarca()
+    {
         Vehiculo buscado = null;
-        String marca = null;
-
-        // TODO: Usando JOptionPane, leer la marca del vehículo a buscar
+        String marca = JOptionPane.showInputDialog("Ingrese la marca del vehiculo a buscar");
+        for (Vehiculo v : vehiculos)
+        {
+            if (marca == v.darMarca())
+            {
+                  buscado = v ;
+            }
+        }
 
         // TODO: Retornar el primer vehículo que tiene la marca dada
 
@@ -241,11 +247,12 @@ public class CalculadorImpuestos {
      *
      * @return El vehículo de la línea, null si no encuentra ninguno.
      */
-    public Vehiculo buscarVehiculoPorLinea() {
+    public Vehiculo buscarVehiculoPorLinea()
+    {
         Vehiculo buscado = null;
         String linea = null;
 
-        // TODO: Usando JOptionPane, leer la línea del vehículo a buscar
+        linea = JOptionPane.showInputDialog("Ingrese la linea del vehiculo a buscar");
 
         // TODO: Buscar el primer vehículo que tiene la línea dada
 
