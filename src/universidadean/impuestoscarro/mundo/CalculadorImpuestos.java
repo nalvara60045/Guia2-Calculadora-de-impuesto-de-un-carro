@@ -273,11 +273,21 @@ public class CalculadorImpuestos {
      *
      * @return El vehículo más antiguo.
      */
-    public Vehiculo buscarVehiculoMasAntiguo() {
+    public Vehiculo buscarVehiculoMasAntiguo()
+    {
         Vehiculo buscado = null;
-
-        // TODO: Buscar el vehículo más antiguo del sistema
-
+        int year = 0;
+        int aux = 2022;
+         for (int i =0; i<vehiculos.length; i++)
+         { Vehiculo v = vehiculos[i];
+             year = Integer.parseInt(v.darAnio());
+             if(year < aux)
+             {
+                 aux = year;
+                 buscado = v;
+                 posVehiculoActual = i;
+             }
+         }
         return buscado;
     }
 
@@ -295,7 +305,7 @@ public class CalculadorImpuestos {
         {
             sumatoria += v.darPrecio();
         }
-        promedio = sumatoria/vehiculos.length;
+        promedio = Math.round(sumatoria/vehiculos.length);
 
         return promedio;
     }
