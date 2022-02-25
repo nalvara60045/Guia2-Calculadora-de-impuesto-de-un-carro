@@ -211,11 +211,18 @@ public class CalculadorImpuestos {
      *
      * @return El vehículo más caro.
      */
-    public Vehiculo buscarVehiculoMasCaro() {
+    public Vehiculo buscarVehiculoMasCaro()
+    {
         Vehiculo masCaro = null;
-
-        // TODO: Buscar el vehículo más caro del arreglo de vehículos
-
+        double precio =0.00;
+        for (Vehiculo v : vehiculos)
+        {
+            if (v.darPrecio() > precio)
+            {
+                precio = v.darPrecio();
+                masCaro = v;
+            }
+        }
         return masCaro;
 
     }
@@ -231,14 +238,11 @@ public class CalculadorImpuestos {
         String marca = JOptionPane.showInputDialog("Ingrese la marca del vehiculo a buscar");
         for (Vehiculo v : vehiculos)
         {
-            if (marca == v.darMarca())
+            if (marca.equalsIgnoreCase(v.darMarca()))
             {
-                  buscado = v ;
+                  buscado = v;
             }
         }
-
-        // TODO: Retornar el primer vehículo que tiene la marca dada
-
         return buscado;
     }
 
@@ -253,8 +257,13 @@ public class CalculadorImpuestos {
         String linea = null;
 
         linea = JOptionPane.showInputDialog("Ingrese la linea del vehiculo a buscar");
-
-        // TODO: Buscar el primer vehículo que tiene la línea dada
+        for (Vehiculo v : vehiculos)
+        {
+            if (linea.equalsIgnoreCase(v.darLinea()))
+            {
+                buscado = v;
+            }
+        }
 
         return buscado;
     }
@@ -277,11 +286,17 @@ public class CalculadorImpuestos {
      *
      * @return Promedio de precios
      */
-    public double promedioPreciosVehiculos() {
+    public double promedioPreciosVehiculos()
+    {
         double promedio = 0.0;
+        double sumatoria = 0;
+        // dividirlo sobre el length y sumar los precios de los vehiculos.
+        for (Vehiculo v : vehiculos)
+        {
+            sumatoria += v.darPrecio();
+        }
+        promedio = sumatoria/vehiculos.length;
 
         return promedio;
     }
-
-
 }
