@@ -131,8 +131,23 @@ public class CalculadorImpuestos {
     public double calcularPago(boolean descProntoPago, boolean descServicioPublico, boolean descTrasladoCuenta) {
         double pago = 0.0;
         double precio = darVehiculoActual().darPrecio();
-
-        // TODO: Encontrar el valor del pago de impuesto de acuerdo a los datos de entrada
+        if (precio <=30000000)
+        {
+            pago = (1.5 * precio)/100;
+        }
+        if (precio > 30000000 && precio <= 70000000)
+        {
+            pago = (2.0*precio)/100;
+        }
+        if (precio > 70000000 && precio <=200000000)
+        {
+            pago = (2.5*precio)/100;
+        }
+        if (precio > 200000000)
+        {
+            pago = (4*precio)/100;
+        }
+        // HALLAR los descuentos para cada valor
 
         return pago;
     }
