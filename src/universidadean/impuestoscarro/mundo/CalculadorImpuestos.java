@@ -12,13 +12,16 @@
 
 package universidadean.impuestoscarro.mundo;
 
+import universidadean.impuestoscarro.interfaz.PanelDescuentos;
+
 import javax.swing.*;
 import java.io.*;
 
 /**
  * Calculador de impuestos.
  */
-public class CalculadorImpuestos {
+public class CalculadorImpuestos
+{
     // -----------------------------------------------------------------
     // Constantes
     // -----------------------------------------------------------------
@@ -64,7 +67,8 @@ public class CalculadorImpuestos {
      *
      * @throws Exception Error al cargar los archivos.
      */
-    public CalculadorImpuestos() throws Exception {
+    public CalculadorImpuestos() throws Exception
+    {
         cargarVehiculos("data/vehiculos.txt");
     }
 
@@ -79,7 +83,8 @@ public class CalculadorImpuestos {
      * @param pArchivo Nombre del archivo donde se encuentran los datos de los vehículos. pArchivo != null.
      * @throws Exception Si ocurre algún error cargando los datos.
      */
-    private void cargarVehiculos(String pArchivo) throws Exception {
+    private void cargarVehiculos(String pArchivo) throws Exception
+    {
         String texto, valores[], sMarca, sLinea, sModelo, sImagen;
         double precio;
         int cantidad = 0;
@@ -95,7 +100,8 @@ public class CalculadorImpuestos {
             posVehiculoActual = 0;
 
             texto = lector.readLine();
-            for (int i = 0; i < vehiculos.length; i++) {
+            for (int i = 0; i < vehiculos.length; i++)
+            {
                 valores = texto.split(",");
 
                 sMarca = valores[0];
@@ -111,7 +117,8 @@ public class CalculadorImpuestos {
             }
             lector.close();
         }
-        catch (IOException e) {
+        catch (IOException e)
+        {
             throw new Exception("Error al cargar los datos almacenados de vehículos.");
         }
         catch (NumberFormatException e) {
@@ -128,24 +135,75 @@ public class CalculadorImpuestos {
      * @param descTrasladoCuenta  Indica si aplica el descuento por traslado de cuenta.
      * @return Valor a pagar de acuerdo con las características del vehículo y los descuentos que se pueden aplicar.
      */
-    public double calcularPago(boolean descProntoPago, boolean descServicioPublico, boolean descTrasladoCuenta) {
+    public double calcularPago(boolean descProntoPago, boolean descServicioPublico, boolean descTrasladoCuenta)
+    {
         double pago = 0.0;
         double precio = darVehiculoActual().darPrecio();
-        if (precio <=30000000)
+        if (precio <= 30000000)
         {
-            pago = (1.5 * precio)/100;
+            pago = (1.5 * precio)/ 100;
+
+           if (descProntoPago == true)
+           {
+              pago = (pago * 90) / 100;
+           }
+            if(descServicioPublico == true)
+            {
+                pago -= 50000;
+            }
+            if (descTrasladoCuenta == true)
+            {
+                pago = (pago * 95) / 100;
+            }
         }
         if (precio > 30000000 && precio <= 70000000)
         {
-            pago = (2.0*precio)/100;
+            pago = (2.0 * precio) / 100;
+            if (descProntoPago == true)
+            {
+                pago = (pago * 90) / 100;
+            }
+            if(descServicioPublico == true)
+            {
+                pago -= 50000;
+            }
+            if (descTrasladoCuenta == true)
+            {
+                pago = (pago * 95) / 100;
+            }
         }
-        if (precio > 70000000 && precio <=200000000)
+        if (precio > 70000000 && precio <= 200000000)
         {
-            pago = (2.5*precio)/100;
+            pago = (2.5 * precio) / 100;
+            if (descProntoPago == true)
+            {
+                pago = (pago * 90) / 100;
+            }
+            if(descServicioPublico == true)
+            {
+                pago -= 50000;
+            }
+            if (descTrasladoCuenta == true)
+            {
+                pago = (pago * 95) / 100;
+            }
         }
         if (precio > 200000000)
         {
-            pago = (4*precio)/100;
+            pago = (4 * precio) / 100;
+            if (descProntoPago == true)
+            {
+                pago = (pago * 90) / 100;
+            }
+            if(descServicioPublico == true)
+            {
+                pago -= 50000;
+            }
+            if (descTrasladoCuenta == true)
+            {
+                pago = (pago * 95) / 100;
+            }
+
         }
         // HALLAR los descuentos para cada valor
 
@@ -159,8 +217,10 @@ public class CalculadorImpuestos {
      * @return El primer vehículo, que ahora es el vehículo actual.
      * @throws Exception Si ya se encuentra en el primer vehículo.
      */
-    public Vehiculo darPrimero() throws Exception {
-        if (posVehiculoActual == 0) {
+    public Vehiculo darPrimero() throws Exception
+    {
+        if (posVehiculoActual == 0)
+        {
             throw new Exception("Ya se encuentra en el primer vehículo.");
         }
         posVehiculoActual = 0;
@@ -174,8 +234,10 @@ public class CalculadorImpuestos {
      * @return El anterior vehículo, que ahora es el vehículo actual.
      * @throws Exception Si ya se encuentra en el primer vehículo.
      */
-    public Vehiculo darAnterior() throws Exception {
-        if (posVehiculoActual == 0) {
+    public Vehiculo darAnterior() throws Exception
+    {
+        if (posVehiculoActual == 0)
+        {
             throw new Exception("Se encuentra en el primer vehículo.");
         }
         posVehiculoActual--;
@@ -189,8 +251,10 @@ public class CalculadorImpuestos {
      * @return El siguiente vehículo, que ahora es el vehículo actual.
      * @throws Exception Si ya se encuentra en el último vehículo
      */
-    public Vehiculo darSiguiente() throws Exception {
-        if (posVehiculoActual == vehiculos.length - 1) {
+    public Vehiculo darSiguiente() throws Exception
+    {
+        if (posVehiculoActual == vehiculos.length - 1)
+        {
             throw new Exception("Se encuentra en el último vehículo.");
         }
         posVehiculoActual++;
@@ -204,8 +268,10 @@ public class CalculadorImpuestos {
      * @return El último vehículo, que ahora es el vehículo actual.
      * @throws Exception Si ya se encuentra en el último vehículo
      */
-    public Vehiculo darUltimo() throws Exception {
-        if (posVehiculoActual == vehiculos.length - 1) {
+    public Vehiculo darUltimo() throws Exception
+    {
+        if (posVehiculoActual == vehiculos.length - 1)
+        {
             throw new Exception("Ya se encuentra en el último vehículo.");
         }
         posVehiculoActual = vehiculos.length - 1;
@@ -217,7 +283,8 @@ public class CalculadorImpuestos {
      *
      * @return El vehículo actual.
      */
-    public Vehiculo darVehiculoActual() {
+    public Vehiculo darVehiculoActual()
+    {
         return vehiculos[posVehiculoActual];
     }
 
@@ -314,13 +381,13 @@ public class CalculadorImpuestos {
     public double promedioPreciosVehiculos()
     {
         double promedio = 0.0;
-        double sumatoria = 0;
+        double sumatoria = 0.0;
         // dividirlo sobre el length y sumar los precios de los vehiculos.
         for (Vehiculo v : vehiculos)
         {
-            sumatoria += v.darPrecio();
+            sumatoria = sumatoria + v.darPrecio();
         }
-        promedio = Math.round(sumatoria/vehiculos.length);
+        promedio = sumatoria / vehiculos.length;
 
         return promedio;
     }
